@@ -29,3 +29,7 @@ nosetests.xml
 
 # Node.js modules
 node_modules
+
+# terraform
+.terraform
+terraform.tfstate*
