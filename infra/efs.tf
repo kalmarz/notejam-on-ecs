@@ -22,7 +22,7 @@ resource "aws_efs_access_point" "notejam" {
     }
   }
   tags = {
-    Name = "${var.APP}-${var.ENV}-efs-acces-point"
+    Name = "${var.APP}-${var.ENV}-efs-access-point"
     App  = var.APP
   }
 }
