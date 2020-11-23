@@ -60,4 +60,4 @@ Notejam is currently built as a monolith containing a built-in webserver and SQL
     * Tightly integrated with other AWS services
     * Pay as you go with Fargate
   * Cons
-    * Proprietary product -> vendor lock-down
+    * Proprietary product -> vendor lock-in?
