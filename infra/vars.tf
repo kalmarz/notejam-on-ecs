@@ -9,3 +9,11 @@ variable "APP" {
 variable "ENV" {
   default = "dev"
 }
+
+variable "TASK_CPU" {
+  default = "256"
+}
+
+variable "TASK_MEMORY" {
+  default = "512"
+}
