@@ -1,5 +1,5 @@
 ### Case study of moving a monolithic web application into a public cloud (AWS)
-
+###
 
 [Notejam](https://github.com/komarserjio/notejam) is a unified sample web application (more than just "Hello World") implemented using different server-side frameworks. For this study I chose the Javascript version.
 
@@ -61,3 +61,7 @@ Notejam is currently built as a monolith containing a built-in webserver and SQL
     * Pay as you go with Fargate
   * Cons
     * Proprietary product -> vendor lock-in?
+
+Both EKS and ECS meet the requirements. The costs are comparable, the operational efforts are comparable. ECS comes with a slightly less operational burden and it's tightly integrated with other AWS services. EKS meanwhile has the advantage of being an open source platform, backed with a huge community support and know-how. And also, using EKS would make easier to move the complete infrastructure to another vendor, or even establish a multi-vendor service strategy.
+
+I chose ECS because the AWS integration, the slightly lower costs and the easier operational aspects.
