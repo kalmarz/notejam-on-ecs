@@ -16,7 +16,7 @@ module "notejam-container" {
   log_configuration = {
     "logDriver" = "awslogs"
     "options" = {
-      "awslogs-group"         = "/ecs/${var.APP}-${var.ENV}"
+      "awslogs-group"         = aws_cloudwatch_log_group.ecs.name
       "awslogs-region"        = var.AWS_REGION
       "awslogs-stream-prefix" = "ecs"
     }
