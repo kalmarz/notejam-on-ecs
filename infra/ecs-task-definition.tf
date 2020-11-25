@@ -4,8 +4,8 @@ module "notejam-container" {
   container_image = "${aws_ecr_repository.notejam.repository_url}:latest"
   port_mappings = [
     {
-      containerPort = 3000
-      hostPort      = 3000
+      containerPort = var.CONTAINER_PORT
+      hostPort      = var.CONTAINER_PORT
       protocol      = "tcp"
   }]
   mount_points = [

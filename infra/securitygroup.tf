@@ -1,7 +1,7 @@
 resource "aws_security_group_rule" "allow-access-from-lb" {
   type                     = "ingress"
-  from_port                = 3000
-  to_port                  = 3000
+  from_port                = var.CONTAINER_PORT
+  to_port                  = var.CONTAINER_PORT
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.allow-http-to-lb.id
   security_group_id        = aws_vpc.ecs-main.default_security_group_id

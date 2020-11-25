@@ -17,3 +17,7 @@ variable "TASK_CPU" {
 variable "TASK_MEMORY" {
   default = "512"
 }
+
+variable "CONTAINER_PORT" {
+  default = "3000"
+}

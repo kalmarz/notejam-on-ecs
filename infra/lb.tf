@@ -22,23 +22,19 @@ resource "aws_lb_listener" "http-forward" {
 
 resource "aws_lb_target_group" "target-group" {
   name        = "${var.APP}-${var.ENV}-target-group"
-  port        = 3000
+  port        = var.CONTAINER_PORT
   protocol    = "HTTP"
   vpc_id      = aws_vpc.ecs-main.id
   target_type = "ip"
 
   health_check {
-    healthy_threshold   = "3"
-    interval            = "30"
-    protocol            = "HTTP"
-    matcher             = "200-299"
-    timeout             = "20"
-    path                = "/"
-    unhealthy_threshold = "2"
+    matcher = "200-299"
+    path    = "/signin"
   }
 
   stickiness {
-    type = "lb_cookie"
+    type            = "lb_cookie"
+    cookie_duration = 3600
   }
 
   tags = {
