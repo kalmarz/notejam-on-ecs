@@ -1,5 +1,4 @@
 ## Case study of moving a monolithic web application into a public cloud (AWS)
-##
 
 [Notejam](https://github.com/komarserjio/notejam) is a unified sample web application (more than just "Hello World") implemented using different server-side frameworks. For this study I chose the Javascript version.
 
@@ -66,6 +65,21 @@ Both EKS and ECS meet the requirements. The costs are comparable, the operationa
 
 I chose ECS because the AWS integration, the slightly lower costs and the easier operational aspects.
 
-### Application architecture
+### Target architecture
 
 ![Notejam target architecture](https://www.dropbox.com/s/as51vxq3h3hqoun/notejam-on-ecs-architecture.png?raw=1)
+
+The architecture is not production ready by any means. It's fully functional but it's for demonstration purposes only.
+#### Components
+
+1. A single-region ECS cluster, running Fargate tasks in a VPC.
+2. The VPC spans over 3 Availability Zones. For the sake of simplicity only public subnets are used.
+3. The VPC is protected by a security group, only allowing incoming connections from the load balancer.
+4. An application load balancer using an HTTP listener only.
+5. An SQLite database mountend from EFS. SQLite is a wonderful, super fast database engine but it's not designed for using it in client-server applications. Changing the database backend however, would be beyond the scope of this exercise. In this case SQLite does its job (with some additional latency) because EFS implements the required [NFSv4 lock upgrading/downgrading](https://aws.amazon.com/about-aws/whats-new/2017/03/amazon-elastic-file-system-amazon-efs-now-supports-nfsv4-lock-upgrading-and-downgrading/) properly. EFS speed can be improved by using a provisioned performance mode.
+6. ECR holds the container images
+7. CloudWatch contains the application logs and relevant metrics. The new Conatiner Insights feature in CloudWatch provides excellent metrics out of the box.
+8. CodePipeline for CI/CD. Not implemented yet.
+9. ASW Backup for the database.
+
+#### Deployment
