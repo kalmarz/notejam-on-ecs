@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(expressValidator());
 app.use(cookieParser());
-app.use(session({cookie: { maxAge: 60000 }, secret: 'secret'}));
+app.use(session({ cookie: { maxAge: 600000 }, secret: 'secret' }));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -52,7 +52,7 @@ app.use(orm.express(settings.dsn, {
 }));
 
 // Flash Messages configuration
-app.use(function(req, res, next){
+app.use(function (req, res, next) {
   res.locals.flash_messages = {
     'success': req.flash('success'),
     'error': req.flash('error')
@@ -61,11 +61,11 @@ app.use(function(req, res, next){
 });
 
 // Inject request object and user pads in view scope
-app.use(function(req, res, next){
+app.use(function (req, res, next) {
   res.locals.req = req;
 
   if (req.isAuthenticated()) {
-    req.user.getPads(function(i, pads) {
+    req.user.getPads(function (i, pads) {
       res.locals.pads = pads;
       next();
     });
@@ -79,7 +79,7 @@ app.use('/', pads);
 app.use('/', notes);
 
 /// catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
@@ -88,7 +88,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
+  app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
@@ -99,7 +99,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
