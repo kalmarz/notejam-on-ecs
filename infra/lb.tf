@@ -41,3 +41,7 @@ resource "aws_lb_target_group" "target-group" {
     App = var.APP
   }
 }
+
+output "notejam-lb-URL" {
+  value = aws_lb.alb.dns_name
+}

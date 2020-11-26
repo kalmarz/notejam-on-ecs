@@ -25,6 +25,8 @@ resource "aws_ecr_lifecycle_policy" "notejam" {
   })
 }
 
-output "notejam-repository-URL" {
-  value = aws_ecr_repository.notejam.repository_url
+resource "null_resource" "push" {
+  provisioner "local-exec" {
+    command = "./push.sh ${var.NOTEJAM_SOURCE_PATH} ${aws_ecr_repository.notejam.repository_url} ${var.TAG}"
+  }
 }

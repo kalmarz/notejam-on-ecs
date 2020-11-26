@@ -21,3 +21,19 @@ variable "TASK_MEMORY" {
 variable "CONTAINER_PORT" {
   default = "3000"
 }
+
+variable "CONTAINER_PATH" {
+  default = "/notejam/db"
+}
+
+variable "NOTEJAM_SOURCE_PATH" {
+  default = "../notejam"
+}
+
+variable "TAG" {
+  default = "latest"
+}
+
+variable "SUBNET_NUMBER" {
+  default = 3
+}

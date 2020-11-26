@@ -10,8 +10,8 @@ module "notejam-container" {
   }]
   mount_points = [
     {
-      containerPath = "/notejam/db"
-      sourceVolume  = "${aws_efs_file_system.notejam.creation_token}"
+      containerPath = var.CONTAINER_PATH
+      sourceVolume  = aws_efs_file_system.notejam.creation_token
   }]
   log_configuration = {
     "logDriver" = "awslogs"

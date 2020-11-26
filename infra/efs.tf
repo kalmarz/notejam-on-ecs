@@ -27,16 +27,16 @@ resource "aws_efs_access_point" "notejam" {
   }
 }
 
-data "aws_subnet_ids" "public" {
+data "aws_subnet_ids" "vpc-public" {
   vpc_id = aws_vpc.ecs-main.id
+  //depends_on = [aws_vpc.ecs-main, aws_subnet.main-public-1, aws_subnet.main-public-2, aws_subnet.main-public-3]
 }
 
 resource "aws_efs_mount_target" "notejam" {
-  // count           = length(data.aws_subnet_ids.public.ids)
-  count           = 3
+  count           = var.SUBNET_NUMBER
   file_system_id  = aws_efs_file_system.notejam.id
-  subnet_id       = tolist(data.aws_subnet_ids.public.ids)[count.index]
+  subnet_id       = tolist(data.aws_subnet_ids.vpc-public.ids)[count.index]
   security_groups = [aws_vpc.ecs-main.default_security_group_id]
-  depends_on      = [aws_subnet.main-public-1, aws_subnet.main-public-2, aws_subnet.main-public-3]
+  //depends_on      = [aws_vpc.ecs-main, aws_subnet.main-public-1, aws_subnet.main-public-2, aws_subnet.main-public-3]
 }
 
