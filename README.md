@@ -1,5 +1,5 @@
-### Case study of moving a monolithic web application into a public cloud (AWS)
-###
+## Case study of moving a monolithic web application into a public cloud (AWS)
+##
 
 [Notejam](https://github.com/komarserjio/notejam) is a unified sample web application (more than just "Hello World") implemented using different server-side frameworks. For this study I chose the Javascript version.
 
@@ -7,7 +7,7 @@ Notejam is currently built as a monolith containing a built-in webserver and SQL
 
 ![Notejam current architecture](https://www.dropbox.com/s/n40t5vnvhknj13x/notejam.png?raw=1)
 
-#### Business requirements
+### Business requirements
 
 * The application must serve a variable amount of traffic. Most users are active during business hours. During big events and conferences the traffic could be 4 times more than typical.
 * Notes should be preserved up to 3 years and recovered, if needed.
@@ -17,7 +17,7 @@ Notejam is currently built as a monolith containing a built-in webserver and SQL
 * The target architecture must provide separated environments to support processes for development, testing and deployment to production in the near future.
 * Relevant infrastructure metrics and logs should be collected for quality assurance and security purposes.
 
-#### Additional aspects
+### Additional aspects
 
 * Operational excellence - Less infrastructure to manage is the better. In favor of managed services.
 * Cost optimization - Prefer services when you only pay what you use.
@@ -25,11 +25,11 @@ Notejam is currently built as a monolith containing a built-in webserver and SQL
 * Performance efficiency - Optimize the resource allocations for the actual usage.
 * Security - Apply security best practices and principles.
 
-#### Contenders
+### Contenders
 
-* Lift & Shift
+* **Lift & Shift**
   * It's quick and easy however it wouldn't fit most of the requirements
-* EC2 VM based, fault-tolerant, multi-AZ infrastructure
+* **EC2 VM** based, fault-tolerant, multi-AZ infrastructure
   * Pros
     * Can be designed in a way to fit the requirements
     * Full control over every elements of the infrastructure
@@ -37,7 +37,7 @@ Notejam is currently built as a monolith containing a built-in webserver and SQL
     * It takes some time to build
     * Big operational overhead
     * Paying for idle resources
-* EC2 based Kubernetes cluster
+* **EC2 based Kubernetes** cluster
   * Pros
     * Can be designed in a way to fit the requirements
     * Full control over every elements of the infrastructure
@@ -45,7 +45,7 @@ Notejam is currently built as a monolith containing a built-in webserver and SQL
   * Cons
     * Same as for the EC2 VM approach
     * Probably an overkill in this case
-* EKS - managed Kubernetes cluster
+* **EKS** - managed Kubernetes cluster
   * Pros
     * Same as for the EC2 based Kubernetes approach
     * Managed control plane
@@ -53,7 +53,7 @@ Notejam is currently built as a monolith containing a built-in webserver and SQL
   * Cons
     * Control plane has additional cost
     * The integration with other AWS services is not so tight
-* ECS - AWS's own managed container platform
+* **ECS** - AWS's own managed container platform
   * Pros
     * Fully managed
     * Free control plane
@@ -65,3 +65,7 @@ Notejam is currently built as a monolith containing a built-in webserver and SQL
 Both EKS and ECS meet the requirements. The costs are comparable, the operational efforts are comparable. ECS comes with a slightly less operational burden and it's tightly integrated with other AWS services. EKS meanwhile has the advantage of being an open source platform, backed with a huge community support and know-how. And also, using EKS would make easier to move the complete infrastructure to another vendor, or even establish a multi-vendor service strategy.
 
 I chose ECS because the AWS integration, the slightly lower costs and the easier operational aspects.
+
+### Application architecture
+
+![Notejam target architecture](https://www.dropbox.com/s/as51vxq3h3hqoun/notejam-on-ecs-architecture.png?raw=1)
