@@ -107,10 +107,10 @@ The architecture is not production ready by any means. It's fully functional but
 
 #### Compliance with business requirements
 
-[*] Handles variable amount of traffic using load balancing and autoscaling.
-[*] Resistant to datacenter failures because of the multi-Az setup and the resiliency of the managed AWS services.
-[*] The application can easily be migrated to another region within minutes.
-[*] The database is regularly backed up and can be restored if needed.
-[*] The application can easily be integrated with CodePipeline, providing CI/CD for the developers.
-[*] Ability to create separate environments for development, staging, etc by setting the `ENV` variable in `vars.tf` (moving Terraform state to a cloud backend like S3, and using Terraform workspaces is preferred)
-[*] Relevant infrastructure metrics and logs are collected in CloudWatch.
+- [*] Handles variable amount of traffic using load balancing and autoscaling.
+- [*] Resistant to datacenter failures because of the multi-Az setup and the resiliency of the managed AWS services.
+- [*] The application can easily be migrated to another region within minutes.
+- [*] The database is regularly backed up and can be restored if needed.
+- [*] The application can easily be integrated with CodePipeline, providing CI/CD for the developers.
+- [*] Ability to create separate environments for development, staging, etc by setting the `ENV` variable in `vars.tf` (moving Terraform state to a cloud backend like S3, and using Terraform workspaces is preferred)
+- [*] Relevant infrastructure metrics and logs are collected in CloudWatch.
