@@ -78,8 +78,39 @@ The architecture is not production ready by any means. It's fully functional but
 4. An application load balancer using an HTTP listener only.
 5. An SQLite database mountend from EFS. SQLite is a wonderful, super fast database engine but it's not designed for using it in client-server applications. Changing the database backend however, would be beyond the scope of this exercise. In this case SQLite does its job (with some additional latency) because EFS implements the required [NFSv4 lock upgrading/downgrading](https://aws.amazon.com/about-aws/whats-new/2017/03/amazon-elastic-file-system-amazon-efs-now-supports-nfsv4-lock-upgrading-and-downgrading/) properly. EFS speed can be improved by using a provisioned performance mode.
 6. ECR holds the container images
-7. CloudWatch contains the application logs and relevant metrics. The new Conatiner Insights feature in CloudWatch provides excellent metrics out of the box.
+7. CloudWatch contains the application logs and relevant metrics. The new Conatiner Insights feature provides excellent metrics out of the box.
 8. CodePipeline for CI/CD. Not implemented yet.
-9. ASW Backup for the database.
+9. AWS Backup for the database. Not implemented yet.
 
-#### Deployment
+### Deployment
+
+1. Clone this repository
+2. Build the Docker image: `cd notejam && docker image build -t notejam .`
+3. Set the required AWS region in `infra/vars.tf`
+4. Export your `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` as environment variables
+5. `cd infra && terraform init`
+6. `terraform apply`
+
+#### The Terraform files
+
+* `vars.tf` - holds the variables
+* `vpc.tf` - defines the VPC
+* `securitygroup.tf` - configures the security groups
+* `iam.tf` - creates the task execution role for ECS
+* `efs.tf` - creates the EFS volume and the mount targets in the Availability Zones
+* `lb.tf` - creates an application load balancer
+* `ecr.tf` - creates the container registry, tags and pushes the Docker image to ECR using a local provisioner
+* `ecs.tf` - creates the ECS cluster
+* `ecs-task-definition.tf` - creates the task and container definitions
+* `ecs-service.tf` - provides the ECS service
+* `ecs-autoscaling.tf` - adds autoscaling capability to the ECS service
+
+#### Compliance with business requirements
+
+[*] Handles variable amount of traffic using load balancing and autoscaling.
+[*] Resistant to datacenter failures because of the multi-Az setup and the resiliency of the managed AWS services.
+[*] The application can easily be migrated to another region within minutes.
+[*] The database is regularly backed up and can be restored if needed.
+[*] The application can easily be integrated with CodePipeline, providing CI/CD for the developers.
+[*] Ability to create separate environments for development, staging, etc by setting the `ENV` variable in `vars.tf` (moving Terraform state to a cloud backend like S3, and using Terraform workspaces is preferred)
+[*] Relevant infrastructure metrics and logs are collected in CloudWatch.
