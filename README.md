@@ -85,11 +85,12 @@ The architecture is not production ready by any means. It's fully functional but
 ### Deployment
 
 1. Clone this repository
-2. Build the Docker image: `cd notejam && docker image build -t notejam .`
-3. Set the required AWS region in `infra/vars.tf`
-4. Export your `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` as environment variables
-5. `cd infra && terraform init`
-6. `terraform apply`
+2. Set the required AWS region in `infra/vars.tf`
+3. Export your `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` as environment variables
+4. `cd infra && terraform init`
+5. `terraform apply`<sup>*</sup>
+
+(<sup>*</sup> Known bug: the first `terraform apply` will fail when creating EFS mount targets because the VPC subnet IDs can't be determined at that time. Running `terraform apply` again fixes the issue and creates the missing resources.)
 
 #### The Terraform files
 
@@ -99,7 +100,7 @@ The architecture is not production ready by any means. It's fully functional but
 * `iam.tf` - creates the task execution role for ECS
 * `efs.tf` - creates the EFS volume and the mount targets in the Availability Zones
 * `lb.tf` - creates an application load balancer
-* `ecr.tf` - creates the container registry, tags and pushes the Docker image to ECR using a local provisioner
+* `ecr.tf` - creates the container registry, builds, tags and pushes the Docker image to ECR using a local-exec
 * `ecs.tf` - creates the ECS cluster
 * `ecs-task-definition.tf` - creates the task and container definitions
 * `ecs-service.tf` - provides the ECS service
