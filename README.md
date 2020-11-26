@@ -1,4 +1,4 @@
-## Case study of moving a monolithic web application into a public cloud (AWS)
+## Case study: moving a monolithic web application into a public cloud (AWS)
 
 [Notejam](https://github.com/komarserjio/notejam) is a unified sample web application (more than just "Hello World") implemented using different server-side frameworks. For this study I chose the Javascript version.
 
@@ -100,6 +100,7 @@ The architecture is not production ready by any means. It's fully functional but
 * `iam.tf` - creates the task execution role for ECS
 * `efs.tf` - creates the EFS volume and the mount targets in the Availability Zones
 * `lb.tf` - creates an application load balancer
+* `cloudwatch.tf` - log group for ECS tasks
 * `ecr.tf` - creates the container registry, builds, tags and pushes the Docker image to ECR using a local-exec
 * `ecs.tf` - creates the ECS cluster
 * `ecs-task-definition.tf` - creates the task and container definitions
