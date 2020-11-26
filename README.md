@@ -90,7 +90,7 @@ The architecture is not production ready by any means. It's fully functional but
 4. `cd infra && terraform init`
 5. `terraform apply`<sup>*</sup>
 
-(<sup>*</sup> Known bug: the first `terraform apply` will fail when creating EFS mount targets because the VPC subnet IDs can't be determined at that time. Running `terraform apply` again fixes the issue and creates the missing resources.)
+(<sup>*</sup> Known bug: `terraform apply` will fail when creating EFS mount targets because the VPC subnet IDs can't yet be determined. Running `terraform apply` again fixes the issue and creates the missing resources.)
 
 #### The Terraform files
 
