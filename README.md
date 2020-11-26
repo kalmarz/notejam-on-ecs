@@ -8,7 +8,7 @@ Notejam is currently built as a monolith containing a built-in webserver and SQL
 
 ### Business requirements
 
-* The application must serve a variable amount of traffic. Most users are active during business hours. During big events and conferences the traffic could be 4 times more than typical.
+* The application must serve a variable amount of traffic. Most users are active during business hours. During big events and conferences, the traffic could be 4 times more than typical.
 * Notes should be preserved up to 3 years and recovered, if needed.
 * Service continuity should be maintained in case of datacenter failures.
 * The service must be capable of being migrated to any region supported by the cloud provider in case of an emergency.
@@ -20,7 +20,7 @@ Notejam is currently built as a monolith containing a built-in webserver and SQL
 
 * Operational excellence - Less infrastructure to manage is the better. In favor of managed services.
 * Cost optimization - Prefer services when you only pay what you use.
-* Reliability - In line with the business requiremens: a multi-datacenter architecture.
+* Reliability - In line with the business requirements: a multi-datacenter architecture.
 * Performance efficiency - Optimize the resource allocations for the actual usage.
 * Security - Apply security best practices and principles.
 
@@ -40,7 +40,7 @@ Notejam is currently built as a monolith containing a built-in webserver and SQL
   * Pros
     * Can be designed in a way to fit the requirements
     * Full control over every elements of the infrastructure
-    * Open source
+    * Open-source
   * Cons
     * Same as for the EC2 VM approach
     * Probably an overkill in this case
@@ -61,7 +61,7 @@ Notejam is currently built as a monolith containing a built-in webserver and SQL
   * Cons
     * Proprietary product -> vendor lock-in?
 
-Both EKS and ECS meet the requirements. The costs are comparable, the operational efforts are comparable. ECS comes with a slightly less operational burden and it's tightly integrated with other AWS services. EKS meanwhile has the advantage of being an open source platform, backed with a huge community support and know-how. And also, using EKS would make easier to move the complete infrastructure to another vendor, or even establish a multi-vendor service strategy.
+Both EKS and ECS meet the requirements. The costs are comparable, the operational efforts are comparable. ECS comes with a slightly less operational burden and it's tightly integrated with other AWS services. EKS meanwhile has the advantage of being an open-source platform, backed with a huge community support and know-how. And also, using EKS would make easier to move the complete infrastructure to another vendor, or even establish a multi-vendor service strategy.
 
 I chose ECS because the AWS integration, the slightly lower costs and the easier operational aspects.
 
@@ -76,9 +76,9 @@ The architecture is not production ready by any means. It's fully functional but
 2. The VPC spans over 3 Availability Zones. For the sake of simplicity only public subnets are used.
 3. The VPC is protected by a security group, only allowing incoming connections from the load balancer.
 4. An application load balancer using an HTTP listener only.
-5. An SQLite database mountend from EFS. SQLite is a wonderful, super fast database engine but it's not designed for using it in client-server applications. Changing the database backend however, would be beyond the scope of this exercise. In this case SQLite does its job (with some additional latency) because EFS implements the required [NFSv4 lock upgrading/downgrading](https://aws.amazon.com/about-aws/whats-new/2017/03/amazon-elastic-file-system-amazon-efs-now-supports-nfsv4-lock-upgrading-and-downgrading/) properly. EFS speed can be improved by using a provisioned performance mode.
+5. An SQLite database mounted from EFS. SQLite is a wonderful, super-fast database engine but it's not designed for using it in client-server applications. Changing the database backend, however, would be beyond the scope of this exercise. In this case SQLite does its job (with some additional latency) because EFS implements the required [NFSv4 lock upgrading/downgrading](https://aws.amazon.com/about-aws/whats-new/2017/03/amazon-elastic-file-system-amazon-efs-now-supports-nfsv4-lock-upgrading-and-downgrading/) properly. EFS speed can be improved by using a provisioned performance mode.
 6. ECR holds the container images
-7. CloudWatch contains the application logs and relevant metrics. The new Conatiner Insights feature provides excellent metrics out of the box.
+7. CloudWatch contains the application logs and relevant metrics. The new Container Insights feature provides excellent metrics out of the box.
 8. CodePipeline for CI/CD. Not implemented yet.
 9. AWS Backup for the database. Not implemented yet.
 
@@ -113,5 +113,5 @@ The architecture is not production ready by any means. It's fully functional but
 - [*] The application can easily be migrated to another region within minutes.
 - [*] The database is regularly backed up and can be restored if needed.
 - [*] The application can easily be integrated with CodePipeline, providing CI/CD for the developers.
-- [*] Ability to create separate environments for development, staging, etc by setting the `ENV` variable in `vars.tf` (moving Terraform state to a cloud backend like S3, and using Terraform workspaces is preferred)
+- [*] Ability to create separate environments for development, staging, etc. by setting the `ENV` variable in `vars.tf` (moving Terraform state to a cloud backend like S3, and using Terraform workspaces is preferred)
 - [*] Relevant infrastructure metrics and logs are collected in CloudWatch.
